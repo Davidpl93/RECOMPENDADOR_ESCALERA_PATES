@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Peldaños</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            width: 80%;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .recommendation img {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Peldaños</h1>
+        <p>Introduce la altura de la pared (mm) y selecciona el entorno de instalación:</p>
+        <input type="number" id="wallHeight" placeholder="Altura de la pared (en mm)">
+        
+        <select id="environment">
+            <option value="aguaNoPotable">Agua no potable / Interiores</option>
+            <option value="exteriores">Exteriores</option>
+            <option value="hierroAcero">Hierro, acero o plástico</option>
+            <option value="aguaPotable">Agua potable</option>
+            <option value="usoIntensivo">Uso intensivo</option>
+        </select>
+        
+        <button onclick="calculateSteps()">Calcular</button>
+
+        <div class="result" id="result"></div>
+        <div class="recommendation" id="recommendation"></div>
+    </div>
+
+    <script>
+        function calculateSteps() {
+            const wallHeight = document.getElementById('wallHeight').value;
+            const environment = document.getElementById('environment').value;
+
+            if (!wallHeight || wallHeight <= 0) {
+                alert('Por favor, introduce una altura válida.');
+                return;
+            }
+
+            // Calculamos cuántos peldaños necesita
+            const stepDistance = 250;
+            const numberOfSteps = Math.ceil(wallHeight / stepDistance);
+
+            // Recomendaciones según el entorno
+            let recommendationText = '';
+            let imageSource = '';
+
+            switch (environment) {
+                case 'aguaNoPotable':
+                    recommendationText = 'Peldaños recomendados: PP/ PVC (Agua no potable, Interiores).';
+                    imageSource = 'https://example.com/peldaño_agua_no_potable.png';
+                    break;
+                case 'exteriores':
+                    recommendationText = 'Peldaños recomendados: Peldaños Antideslizantes (Exteriores).';
+                    imageSource = 'https://example.com/peldaño_exteriores.png';
+                    break;
+                case 'hierroAcero':
+                    recommendationText = 'Peldaños recomendados: Peldaños de Hierro o Acero (Industrial).';
+                    imageSource = 'https://example.com/peldaño_hierro_acero.png';
+                    break;
+                case 'aguaPotable':
+                    recommendationText = 'Peldaños recomendados: PP/ PVC (Agua potable).';
+                    imageSource = 'https://example.com/peldaño_agua_potable.png';
+                    break;
+                case 'usoIntensivo':
+                    recommendationText = 'Peldaños recomendados: Peldaños Especiales (Uso intensivo).';
+                    imageSource = 'https://example.com/peldaño_uso_intensivo.png';
+                    break;
+            }
+
+            // Mostramos el resultado
+            document.getElementById('result').innerHTML = `Necesitas ${numberOfSteps} peldaños.`;
+            document.getElementById('recommendation').innerHTML = `<p>${recommendationText}</p><img src="${imageSource}" alt="Peldaño recomendado">`;
+        }
+    </script>
+</body>
+</html>
